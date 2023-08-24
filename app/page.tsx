@@ -29,24 +29,33 @@ export default function Home() {
     setMusic(null);
     setMidi(null);
 
-    const res = await fetch("/api/music/generate", {
-      method: "POST",
-      body: JSON.stringify({
-        genre: "lofi hiphop",
-        style: "j dilla",
-        vibe: "chill",
-        bpm: 90,
-      } as GenerateRequestBody),
-    });
+    try {
+      const res = await fetch("/api/music/generate", {
+        method: "POST",
+        body: JSON.stringify({
+          vibe: "chill",
+          genre: "lofi hiphop",
+          style: "j dilla",
+          bpm: 90,
+          // vibe: "happy",
+          // genre: "jazz",
+          // style: "charlie parker",
+          // bpm: 160,
+        } as GenerateRequestBody),
+      });
 
-    const { music, midi } = (await res.json()).data as GenerateResponseBody;
+      const { music, midi } = (await res.json()).data as GenerateResponseBody;
 
-    console.log(music);
+      console.log(music);
 
-    setMusic(music);
-    setMidi(midi);
+      setMusic(music);
+      setMidi(midi);
 
-    setLoading(false);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
   };
 
   const buttonText = loading ? "Loading..." : "Generate Music";
