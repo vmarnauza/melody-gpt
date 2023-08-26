@@ -33,14 +33,14 @@ export default function Home() {
       const res = await fetch("/api/music/generate", {
         method: "POST",
         body: JSON.stringify({
-          vibe: "chill",
-          genre: "lofi hiphop",
-          style: "j dilla",
-          bpm: 90,
-          // vibe: "happy",
-          // genre: "jazz",
-          // style: "charlie parker",
-          // bpm: 160,
+          // vibe: "chill",
+          // genre: "lofi hiphop",
+          // style: "j dilla",
+          // bpm: 90,
+          vibe: "happy",
+          genre: "jazz",
+          style: "charlie parker",
+          bpm: 160,
         } as GenerateRequestBody),
       });
 
