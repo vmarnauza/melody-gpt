@@ -33,14 +33,18 @@ export default function Home() {
       const res = await fetch("/api/music/generate", {
         method: "POST",
         body: JSON.stringify({
-          // vibe: "chill",
-          // genre: "lofi hiphop",
-          // style: "j dilla",
-          // bpm: 90,
-          vibe: "happy",
-          genre: "jazz",
-          style: "charlie parker",
-          bpm: 160,
+          vibe: "calm, natural",
+          genre: "lofi hiphop",
+          style: "j dilla",
+          bpm: 90,
+          // vibe: "happy",
+          // genre: "jazz",
+          // style: "charlie parker",
+          // bpm: 160,
+          // vibe: "atmospheric",
+          // genre: "ambient",
+          // style: "brian eno",
+          // bpm: 60,
         } as GenerateRequestBody),
       });
 
@@ -62,7 +66,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
-      <section className="max-w-screen-lg w-full flex flex-col gap-8">
+      <section className="max-w-screen-lg w-full flex flex-col gap-8 py-8">
         <h1>Melody Bot</h1>
         <div>
           <button onClick={generateMusic}>{buttonText}</button>

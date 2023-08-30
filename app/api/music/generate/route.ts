@@ -116,7 +116,8 @@ export async function POST(request: NextRequest) {
       },
     ],
     max_tokens: 2000,
-    temperature: body.temperature || 1.2,
+    temperature: body.temperature || 1.4,
+    top_p: 0.2,
   });
 
   // const message = response.choices[0].message.function_call?.arguments;
@@ -163,7 +164,7 @@ const createPrompt = ({
   if (bars)
     prompt += `. Create melody and chords for a total duration of ${
       bars * 4
-    } beats of music`;
+    } beats of music.`;
   if (customText) prompt += `, ${customText}`;
 
   return prompt;
