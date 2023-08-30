@@ -2,7 +2,11 @@
 
 A ChatGPT music composer with export to MIDI.
 
+[https://melody-gpt.netlify.app](https://melody-gpt.netlify.app)
+
 ## Getting Started
+
+Set up an `.env.local` file with your OpenAI API key and organization ID. See `.env.sample` for reference.
 
 Install NPM packages:
 
