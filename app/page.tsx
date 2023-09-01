@@ -158,15 +158,15 @@ export default function Home() {
   const generateButtonText = loading ? "Loading..." : "Generate Music";
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between">
-      <section className="max-w-screen-lg w-full flex flex-col gap-8 py-8 px-4">
+    <main>
+      <section>
         <h1>Melody GPT</h1>
         <div className="flex gap-4">{paramMarkup}</div>
         <div className="flex flex-col gap-2">
           <div>
             <button onClick={generateMusic}>{generateButtonText}</button>
           </div>
-          <p className="text-red">{error}</p>
+          <p className="text-rose-600">{error}</p>
         </div>
         <div>{outputMarkup}</div>
         <div className="flex gap-4">{downloadButtonMarkup}</div>

@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+main {
+  @apply flex min-h-screen flex-col items-center gap-8;
+}
+
+section {
+  @apply max-w-screen-lg w-full flex flex-col gap-8 py-8 px-4;
+}
 
 h1 {
   @apply text-4xl font-bold;
@@ -13,6 +20,10 @@ button {
 
 button:disabled {
   @apply text-stone-500;
+}
+
+a {
+  @apply text-blue-500 underline;
 }
 
 label {
