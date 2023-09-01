@@ -21,80 +21,6 @@ export async function POST(request: NextRequest) {
   const prompt = createPrompt(body);
   console.log(prompt);
   const response = await openai.chat.completions.create({
-    // model: "gpt-4-0613",
-    // messages: [
-    //   {
-    //     role: "system",
-    //     content:
-    //       "You are a music composition assistant. When a user gives you a prompt you must return a text representation of the chords and melody with their pitches and durations, and also durations between them. Compose music that fits the user's request perfectly, matching the vibe, genre and style they want.",
-    //   },
-    //   {
-    //     role: "user",
-    //     content: prompt,
-    //   },
-    // ],
-    // functions: [
-    //   {
-    //     name: "generate_music",
-    //     description: "Generate melody and chord progression.",
-    //     parameters: {
-    //       type: "object",
-    //       properties: {
-    //         melody: {
-    //           type: "array",
-    //           description:
-    //             "The melody for the chord progression expressed in text as an array of note objects.",
-    //           items: {
-    //             type: "object",
-    //             description: "Note object.",
-    //             properties: {
-    //               pitch: {
-    //                 type: "string",
-    //                 description: "Note pitch.",
-    //               },
-    //               duration: {
-    //                 type: "number",
-    //                 description:
-    //                   "The note's duration in beats expressed as a float.",
-    //               },
-    //               wait: {
-    //                 type: "number",
-    //                 description:
-    //                   "The time between previous and next note in beats expressed as a float.",
-    //               },
-    //             },
-    //           },
-    //         },
-    //         chords: {
-    //           type: "array",
-    //           description:
-    //             "The chord progression for the melody expressed in text as an array of chord objects.",
-    //           items: {
-    //             type: "object",
-    //             description: "Chord object.",
-    //             properties: {
-    //               chord: {
-    //                 type: "string",
-    //                 description: "The chord without spaces.",
-    //               },
-    //               duration: {
-    //                 type: "number",
-    //                 description:
-    //                   "The note's duration in beats expressed as a float.",
-    //               },
-    //               wait: {
-    //                 type: "number",
-    //                 description:
-    //                   "The time between previous and next note in beats expressed as a float.",
-    //               },
-    //             },
-    //           },
-    //         },
-    //       },
-    //       required: ["melody", "chords"],
-    //     },
-    //   },
-    // ],
     model: "gpt-3.5-turbo",
     messages: [
       {
@@ -121,7 +47,6 @@ export async function POST(request: NextRequest) {
     temperature: body.temperature || 1,
   });
 
-  // const message = response.choices[0].message.function_call?.arguments;
   const message = response.choices[0].message.content;
 
   if (!message) {
