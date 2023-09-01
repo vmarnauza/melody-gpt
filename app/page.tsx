@@ -120,7 +120,7 @@ export default function Home() {
     <div className="flex flex-col gap-1">
       <label htmlFor="output">Output</label>
       <textarea
-        className="border"
+        className="border max-w-xl w-full"
         id="output"
         value={music ? JSON.stringify(music, null, 2) : ""}
         readOnly
@@ -129,38 +129,47 @@ export default function Home() {
     </div>
   );
 
-  const buttonText = loading ? "Loading..." : "Generate Music";
+  const params = `${vibe.join(" ")} ${genre} ${style}`;
+  const downloadButtonData = [
+    {
+      name: "Melody",
+      disabled: !Boolean(midi?.melody) || loading,
+      onClick: () => downloadUri(midi?.melody || "", `${params} | melody.mid`),
+    },
+    {
+      name: "Chords",
+      disabled: !Boolean(midi?.chords) || loading,
+      onClick: () => downloadUri(midi?.chords || "", `${params} | chords.mid`),
+    },
+    {
+      name: "Combined",
+      disabled: !Boolean(midi?.combined) || loading,
+      onClick: () => downloadUri(midi?.combined || "", `${params}.mid`),
+    },
+  ];
+  const downloadButtonMarkup = downloadButtonData.map(
+    ({ name, onClick, disabled }) => (
+      <button key={name} onClick={onClick} disabled={disabled}>
+        Download {name}
+      </button>
+    )
+  );
+
+  const generateButtonText = loading ? "Loading..." : "Generate Music";
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
-      <section className="max-w-screen-lg w-full flex flex-col gap-8 py-8">
+      <section className="max-w-screen-lg w-full flex flex-col gap-8 py-8 px-4">
         <h1>Melody GPT</h1>
         <div className="flex gap-4">{paramMarkup}</div>
-        <div>
-          <button onClick={generateMusic}>{buttonText}</button>
+        <div className="flex flex-col gap-2">
+          <div>
+            <button onClick={generateMusic}>{generateButtonText}</button>
+          </div>
           <p className="text-red">{error}</p>
         </div>
-        {outputMarkup}
-        <div className="flex gap-4">
-          <button
-            onClick={() => downloadUri(midi?.melody || "", "melody.mid")}
-            disabled={!Boolean(midi?.melody) || loading}
-          >
-            Download Melody
-          </button>
-          <button
-            onClick={() => downloadUri(midi?.chords || "", "chords.mid")}
-            disabled={!Boolean(midi?.chords) || loading}
-          >
-            Download Chords
-          </button>
-          <button
-            onClick={() => downloadUri(midi?.combined || "", "combined.mid")}
-            disabled={!Boolean(midi?.combined) || loading}
-          >
-            Download Combined
-          </button>
-        </div>
+        <div>{outputMarkup}</div>
+        <div className="flex gap-4">{downloadButtonMarkup}</div>
       </section>
     </main>
   );
