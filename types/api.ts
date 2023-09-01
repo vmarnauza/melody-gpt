@@ -32,4 +32,5 @@ export interface Music {
 export interface Midi {
   melody: string;
   chords: string;
+  combined: string;
 }

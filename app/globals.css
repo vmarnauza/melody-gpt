@@ -3,10 +3,22 @@
 @tailwind utilities;
 
 
+h1 {
+  @apply text-4xl font-bold;
+}
+
 button {
   @apply border px-4 py-2 rounded-full;
 }
 
 button:disabled {
   @apply text-stone-500;
+}
+
+label {
+  @apply font-semibold;
+}
+
+select[multiple] {
+  @apply h-36;
 }

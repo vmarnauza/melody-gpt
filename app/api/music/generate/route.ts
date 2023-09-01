@@ -101,11 +101,13 @@ export async function POST(request: NextRequest) {
         role: "system",
         content:
           "You are a music composer. When asked by the user, try to create melody and chords that closely match their prompt. " +
+          "Step 1 - Generate a chord progression matching the user's request. " +
+          "Step 2 - Generate a melody that goes over the chords and matches the user's request. " +
           "Respond with a JSON object containing two properties: 'melody' and 'chords'. " +
           "The melody property must be an array of note objects. Each note object contains properties for 'pitch', 'duration' and 'wait'. " +
           "The chords property must be an array of chord objects. Each chord object contains properties for 'chord', 'duration' and 'wait'. " +
-          "The 'pitch' property is a string representing the note pitch. " +
-          "The 'chord' property is a string representing the chord without spaces. " +
+          "The 'pitch' property is a string representing the note pitch and octave, for example, C3 or D#2. " +
+          "The 'chord' property is a string representing the chord without spaces, for example Cm or A7sus4. " +
           "The 'duration' property is the note's duration in beats expressed as a float. " +
           "The 'wait' property is the time between previous and next note in beats expressed as a float. " +
           "Adhere to the format outlined above exactly and do not add any additional text. Generate as many bars of music as requested by the user.",
@@ -116,8 +118,7 @@ export async function POST(request: NextRequest) {
       },
     ],
     max_tokens: 2000,
-    temperature: body.temperature || 1.4,
-    top_p: 0.2,
+    temperature: body.temperature || 1,
   });
 
   // const message = response.choices[0].message.function_call?.arguments;
@@ -136,7 +137,7 @@ export async function POST(request: NextRequest) {
     console.log("Message: ", message);
 
     const music = JSON.parse(json);
-    const midi = createMidi(music, body.bpm, prompt);
+    const midi = createMidi(music);
 
     return NextResponse.json({
       data: {
@@ -173,18 +174,14 @@ const createPrompt = ({
 const isRequestBodyValid = (
   body: GenerateRequestBody
 ): body is GenerateRequestBody => {
-  const { genre, vibe, style, bpm } = body;
+  const { genre, vibe, style } = body;
 
-  if (!genre || !vibe || !style || !bpm) return false;
+  if (!genre || !vibe || !style) return false;
 
   return true;
 };
 
-const createMidi = (
-  music: Music,
-  tempo: number | undefined = 120,
-  prompt: string
-) => {
+const createMidi = (music: Music) => {
   const melodyTrack = new MidiWriter.Track();
   const melodyNotes = music.melody.map(({ pitch, duration, wait }) => {
     const durationTicks = `T${duration * 128}`;
@@ -197,7 +194,7 @@ const createMidi = (
     });
   });
   melodyTrack.addEvent(melodyNotes);
-  melodyTrack.addTrackName(prompt);
+  melodyTrack.addTrackName("melody");
   // melodyTrack.setTempo(tempo, 0);
 
   const chordTrack = new MidiWriter.Track();
@@ -217,14 +214,16 @@ const createMidi = (
     });
   });
   chordTrack.addEvent(chordNotes);
-  chordTrack.addTrackName(prompt);
+  chordTrack.addTrackName("chords");
   // chordTrack.setTempo(tempo, 0);
 
   const melodyWriter = new MidiWriter.Writer(melodyTrack);
   const chordWriter = new MidiWriter.Writer(chordTrack);
+  const combinedWriter = new MidiWriter.Writer([melodyTrack, chordTrack]);
 
   return {
     melody: melodyWriter.dataUri(),
     chords: chordWriter.dataUri(),
+    combined: combinedWriter.dataUri(),
   };
 };
