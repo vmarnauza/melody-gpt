@@ -1,5 +1,10 @@
+import dotenv from "dotenv";
 import { readFileSync, readdirSync } from "fs";
 import path from "path";
+
+dotenv.config({
+  path: path.join(__dirname, "..", "..", ".env.local"),
+});
 
 const fineTune = (files: Buffer[]) => {
   console.log(`Got ${files.length} files for fine-tuning.`);
