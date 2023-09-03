@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "tune": "npx ts-node ./backend/fine-tune"
   },
   "dependencies": {
     "@types/node": "20.5.1",
@@ -23,5 +24,8 @@
     "react-dom": "18.2.0",
     "tailwindcss": "3.3.3",
     "typescript": "5.1.6"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1"
   }
 }
