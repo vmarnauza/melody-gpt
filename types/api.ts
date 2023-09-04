@@ -16,21 +16,16 @@ export interface GenerateResponseBody {
 export type Note = {
   pitch: string;
   duration: number;
-  wait: number;
-};
-export type Chord = {
-  chord: string;
-  duration: number;
-  wait: number;
+  startTime: number;
 };
 
 export interface Music {
-  melody: Array<Note>;
-  chords: Array<Chord>;
+  result: Melody;
+  description: string;
 }
+
+export type Melody = Array<Note>;
 
 export interface Midi {
   melody: string;
-  chords: string;
-  combined: string;
 }

@@ -134,17 +134,7 @@ export default function Home() {
     {
       name: "Melody",
       disabled: !Boolean(midi?.melody) || loading,
-      onClick: () => downloadUri(midi?.melody || "", `${params} | melody.mid`),
-    },
-    {
-      name: "Chords",
-      disabled: !Boolean(midi?.chords) || loading,
-      onClick: () => downloadUri(midi?.chords || "", `${params} | chords.mid`),
-    },
-    {
-      name: "Combined",
-      disabled: !Boolean(midi?.combined) || loading,
-      onClick: () => downloadUri(midi?.combined || "", `${params}.mid`),
+      onClick: () => downloadUri(midi?.melody || "", `${params}.mid`),
     },
   ];
   const downloadButtonMarkup = downloadButtonData.map(

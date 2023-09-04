@@ -10,13 +10,13 @@
     "tune": "npx ts-node ./backend/fine-tune"
   },
   "dependencies": {
+    "@tonejs/midi": "^2.0.28",
     "@types/node": "20.5.1",
     "@types/react": "18.2.20",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.19",
-    "midi-writer-js": "^2.1.4",
     "next": "13.4.19",
     "openai": "^4.0.1",
     "postcss": "8.4.28",
