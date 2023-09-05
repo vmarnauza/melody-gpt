@@ -3,6 +3,7 @@ import { readFileSync, readdirSync, statSync, writeFileSync } from "fs";
 import { Midi } from "@tonejs/midi";
 import { Melody } from "@/types/api";
 import { createSystemPrompt } from "../prompt";
+import { encode } from "gpt-tokenizer";
 
 type MidiData = Record<string, Midi[]>;
 interface Message {
@@ -17,7 +18,10 @@ type TrainingData = TrainingItem[];
 const readMidis = () => {
   const folderList = readdirSync(path.join(__dirname, "midi")).filter(
     (folderName) => {
-      return statSync(path.join(__dirname, "midi", folderName)).isDirectory();
+      return (
+        statSync(path.join(__dirname, "midi", folderName)).isDirectory() &&
+        !folderName.startsWith("_")
+      );
     }
   );
   const midis: MidiData = {};
@@ -69,7 +73,7 @@ const midisToTrainingData = (midiData: MidiData) => {
   for (const [prompt, midis] of Object.entries(midiData)) {
     midis.forEach((midi) => {
       const response = midiToGptResponse(midi);
-      trainingData.push({
+      const trainingDataItem: TrainingItem = {
         messages: [
           {
             role: "system",
@@ -84,7 +88,18 @@ const midisToTrainingData = (midiData: MidiData) => {
             content: JSON.stringify(response),
           },
         ],
-      });
+      };
+      console.log(encode(JSON.stringify(trainingDataItem)).length);
+      const isItemOverTokenLimit =
+        encode(JSON.stringify(trainingDataItem)).length > 4096;
+
+      if (isItemOverTokenLimit) {
+        console.log(
+          `Skipping midi because it's over the token limit: ${midi.name}}`
+        );
+      } else {
+        trainingData.push(trainingDataItem);
+      }
     });
   }
 

@@ -30,19 +30,19 @@ export const createPrompt = ({
   genre,
   vibe,
   style,
-  bars = 4,
-  customText,
-}: GenerateRequestBody) => {
+}: // bars = 4,
+// customText,
+GenerateRequestBody) => {
   let prompt = "";
 
   if (vibe) prompt += vibe;
   if (genre) prompt += ` ${genre} music`;
   if (style) prompt += ` in style of ${style}`;
-  if (bars)
-    prompt += `. Create music for a total duration of ${
-      bars * 4
-    } beats of music.`;
-  if (customText) prompt += `, ${customText}`;
+  // if (bars)
+  //   prompt += `. Create music for a total duration of ${
+  //     bars * 4
+  //   } beats of music.`;
+  // if (customText) prompt += `, ${customText}`;
 
   return prompt;
 };

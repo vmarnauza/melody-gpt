@@ -20,4 +20,16 @@ Run the development server:
 npm run dev
 ```
 
+## Fine-tuning
+
+Add training MIDI files in `backend/fine-tune/midi`. Sort them in folders named according to the user prompt that they should be associated with.
+
+Run fine-tuning with NPM:
+
+```bash
+npm run tune
+```
+
+Once fine-tuning completes add your fine-tuned model ID to `.env.local` as `OPENAI_MODEL_ID`
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

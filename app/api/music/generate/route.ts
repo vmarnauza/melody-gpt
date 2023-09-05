@@ -21,7 +21,8 @@ export async function POST(request: NextRequest) {
   const prompt = createPrompt(body);
   console.log(prompt);
   const response = await openai.chat.completions.create({
-    model: "gpt-3.5-turbo",
+    // model: "gpt-3.5-turbo",
+    model: process.env.OPENAI_MODEL_ID || "gpt-3.5-turbo",
     messages: [
       {
         role: "system",

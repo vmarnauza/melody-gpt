@@ -32,7 +32,7 @@ const fineTune = async () => {
     console.log("-----");
 
     console.log(`Starting fine-tuning`);
-    let fineTune = await openai.fineTunes.create({
+    let fineTune = await openai.fineTuning.jobs.create({
       model: "gpt-3.5-turbo",
       training_file: file.id,
     });
@@ -45,14 +45,14 @@ const fineTune = async () => {
     const events: Record<string, unknown> = {};
 
     while (fineTune.status == "running" || fineTune.status == "created") {
-      fineTune = await openai.fineTunes.retrieve(fineTune.id);
+      fineTune = await openai.fineTuning.jobs.retrieve(fineTune.id);
       console.log(`${fineTune.status}`);
 
-      const { data } = await openai.fineTunes.listEvents(fineTune.id);
+      const { data } = await openai.fineTuning.jobs.listEvents(fineTune.id);
       for (const event of data.reverse()) {
-        if (event.created_at in events) continue;
+        if (event.id in events) continue;
 
-        events[event.created_at] = event;
+        events[event.id] = event;
         const timestamp = new Date(event.created_at * 1000);
         console.log(`- ${timestamp.toLocaleTimeString()}: ${event.message}`);
       }

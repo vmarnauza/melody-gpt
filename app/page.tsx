@@ -15,9 +15,9 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const [vibe, setVibe] = useState<string[]>(["calm", "natural"]);
-  const [genre, setGenre] = useState<string>("lo-fi hip hop");
-  const [style, setStyle] = useState<string>("j dilla");
+  const [vibe, setVibe] = useState<string[]>(["calm", "cute"]);
+  const [genre, setGenre] = useState<string>("pop");
+  const [style, setStyle] = useState<string>("cassette tapes");
 
   function downloadUri(uri: string, name: string = "midi.mid") {
     if (!uri) return;
