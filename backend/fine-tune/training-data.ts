@@ -89,7 +89,7 @@ const midisToTrainingData = (midiData: MidiData) => {
           },
         ],
       };
-      console.log(encode(JSON.stringify(trainingDataItem)).length);
+
       const isItemOverTokenLimit =
         encode(JSON.stringify(trainingDataItem)).length > 4096;
 

@@ -34,5 +34,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# local generated files
+# local training and generated files
+backend/fine-tune/midi
 training-data.jsonl
