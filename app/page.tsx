@@ -46,6 +46,13 @@ export default function Home() {
         } as GenerateRequestBody),
       });
 
+      if (!res.ok) {
+        const errorMessage = (await res.json()).error || "Something went wrong";
+        setError(errorMessage);
+        setLoading(false);
+        return;
+      }
+
       const { music, midi } = (await res.json()).data as GenerateResponseBody;
 
       console.log(music);

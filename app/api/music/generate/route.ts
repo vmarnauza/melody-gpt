@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
         content: prompt,
       },
     ],
-    max_tokens: 2000,
+    max_tokens: 2500,
     temperature: body.temperature || 1,
   });
 
@@ -61,7 +61,15 @@ export async function POST(request: NextRequest) {
       },
     });
   } catch (error) {
-    throw error;
+    console.error(error);
+    return NextResponse.json(
+      {
+        error: (error as Error).message,
+      },
+      {
+        status: 500,
+      }
+    );
   }
 }
 
