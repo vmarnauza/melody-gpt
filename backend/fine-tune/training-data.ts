@@ -47,14 +47,12 @@ const readMidis = () => {
 
 const midiToGptResponse = (midi: Midi) => {
   const response = {
-    music: {
-      result: [] as Melody,
-    },
+    result: [] as Melody,
   };
 
   midi.toJSON().tracks.forEach((track) => {
     track.notes.forEach((note) => {
-      response.music.result.push({
+      response.result.push({
         pitch: note.name,
         duration: note.duration,
         startTime: note.time,
