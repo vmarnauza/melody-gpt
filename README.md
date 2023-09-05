@@ -24,7 +24,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Fine-tuning
 
-Add training MIDI files in `backend/fine-tune/midi`. Sort them in folders named according to the user prompt that they should be associated with. For example if a MIDI file should be the result for prompt `angry vaporwave in the style of brian eno` then put it in a folder that has the prompt in its name.
+Add training MIDI files in `backend/fine-tune/midi`. Sort them in folders named according to the user prompt that they should be associated with. For example if a MIDI file should be the result for prompt `angry vaporwave in the style of brian eno` then put it in a folder that has the prompt as its name.
 
 Run fine-tuning with NPM:
 
