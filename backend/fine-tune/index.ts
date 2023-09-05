@@ -3,6 +3,8 @@ import path from "path";
 import { createReadStream, existsSync } from "fs";
 import { openai } from "../openai";
 import { createTrainingData } from "./training-data";
+import * as readline from "readline";
+import { stdin as input, stdout as output } from "process";
 
 const fineTune = async () => {
   const trainingDataPath = path.join(__dirname, "training-data.jsonl");
@@ -63,4 +65,14 @@ const fineTune = async () => {
 };
 
 createTrainingData();
-// fineTune();
+
+const rl = readline.createInterface({ input, output });
+rl.question("Should we fine-tune? (y/n) ", (answer) => {
+  if (answer === "y") {
+    fineTune();
+  } else {
+    console.log("Skipping fine-tuning");
+  }
+
+  rl.close();
+});

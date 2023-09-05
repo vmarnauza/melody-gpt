@@ -109,8 +109,9 @@ const midisToTrainingData = (midiData: MidiData) => {
 export const createTrainingData = () => {
   const midiData = readMidis();
   const trainingData = midisToTrainingData(midiData);
+  const trainingDataPath = path.join(__dirname, "training-data.jsonl");
 
-  writeFileSync(path.join(__dirname, "training-data.jsonl"), "");
+  writeFileSync(trainingDataPath, "");
   trainingData.forEach((item) => {
     writeFileSync(
       path.join(__dirname, "training-data.jsonl"),
@@ -118,4 +119,6 @@ export const createTrainingData = () => {
       { flag: "a" }
     );
   });
+
+  console.log(`Training data saved to ${trainingDataPath}`);
 };
