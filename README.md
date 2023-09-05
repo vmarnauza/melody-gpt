@@ -1,6 +1,6 @@
 # Melody GPT
 
-A ChatGPT music composer with export to MIDI.
+A ChatGPT music composer with export to MIDI. Currently uses a fine-tuned version of gpt-3.5-turbo.
 
 [https://melody-gpt.netlify.app](https://melody-gpt.netlify.app)
 
