@@ -1,4 +1,4 @@
-import { GenerateRequestBody } from "@/types/api";
+import { GenerateRequestBody } from "../types/api";
 
 export const createSystemPrompt = () => {
   return (

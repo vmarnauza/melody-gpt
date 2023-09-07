@@ -1,8 +1,8 @@
-import { openai } from "@/backend/openai";
+import { openai } from "@/modules/openai";
 import { GenerateRequestBody, Music } from "@/types/api";
 import { NextRequest, NextResponse } from "next/server";
 import { Midi } from "@tonejs/midi";
-import { createPrompt, createSystemPrompt } from "@/backend/prompt";
+import { createPrompt, createSystemPrompt } from "@/modules/prompt";
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
