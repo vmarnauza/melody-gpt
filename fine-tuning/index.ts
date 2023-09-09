@@ -67,8 +67,8 @@ const fineTune = async () => {
 createTrainingData();
 
 const rl = readline.createInterface({ input, output });
-rl.question("Should we fine-tune? (y/n) ", (answer) => {
-  if (answer === "y") {
+rl.question("Should we fine-tune? (y/N) ", (answer) => {
+  if (answer.toLowerCase() === "y" || answer.toLowerCase() === "yes") {
     fineTune();
   } else {
     console.log("Skipping fine-tuning");
