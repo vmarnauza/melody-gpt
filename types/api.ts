@@ -1,10 +1,6 @@
 export interface GenerateRequestBody {
   genre: string;
   vibe: string;
-  style: string;
-  bpm?: number;
-  bars?: number; // bars
-  customText?: string;
   temperature?: number;
 }
 

@@ -2,7 +2,7 @@ import path, { extname } from "path";
 import { readFileSync, readdirSync, statSync, writeFileSync } from "fs";
 import { Midi } from "@tonejs/midi";
 import { Melody } from "@/types/api";
-import { createSystemPrompt } from "../backend/prompt";
+import { createSystemPrompt } from "../modules/prompt";
 import { encode } from "gpt-tokenizer";
 
 type MidiData = Record<string, Midi[]>;

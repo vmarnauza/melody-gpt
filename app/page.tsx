@@ -1,23 +1,19 @@
 "use client";
 
-import { genres, styles, vibes } from "@/modules/params";
-import {
-  GenerateRequestBody,
-  GenerateResponseBody,
-  Midi,
-  Music,
-} from "@/types/api";
+import Button from "@/components/button";
+import Header from "@/components/header";
+import { genres, vibes } from "@/modules/params";
+import { GenerateRequestBody, GenerateResponseBody, Midi } from "@/types/api";
 import { useState } from "react";
 
 export default function Home() {
-  const [music, setMusic] = useState<Music | null>(null);
   const [midi, setMidi] = useState<Midi | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const [vibe, setVibe] = useState<string[]>(["calm", "cute"]);
+  const [currentParams, setCurrentParams] = useState<string | null>(null);
   const [genre, setGenre] = useState<string>("pop");
-  const [style, setStyle] = useState<string>("cassette tapes");
+  const [vibe, setVibe] = useState<string[]>(["calm", "cute"]);
 
   function downloadUri(uri: string, name: string = "midi.mid") {
     if (!uri) return;
@@ -33,8 +29,8 @@ export default function Home() {
   const generateMusic = async () => {
     setError(null);
     setLoading(true);
-    setMusic(null);
     setMidi(null);
+    setCurrentParams(null);
 
     try {
       const res = await fetch("/api/generate", {
@@ -42,7 +38,6 @@ export default function Home() {
         body: JSON.stringify({
           vibe: vibe.join(", "),
           genre: genre,
-          style: style,
         } as GenerateRequestBody),
       });
 
@@ -57,9 +52,8 @@ export default function Home() {
 
       console.log(music);
 
-      setMusic(music);
       setMidi(midi);
-
+      setCurrentParams(`${vibe.join(" ")} ${genre}`);
       setLoading(false);
     } catch (error) {
       const errorMessage = (error as Error).message || "Something went wrong";
@@ -76,29 +70,20 @@ export default function Home() {
   const handleGenreChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setGenre(e.target.value);
   };
-  const handleStyleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setStyle(e.target.value);
-  };
 
   const paramData = [
     {
-      name: "vibe",
-      value: vibe,
-      onChange: handleVibeChange,
-      multiple: true,
-      options: vibes,
-    },
-    {
-      name: "genre",
+      name: "Genre",
       value: genre,
       onChange: handleGenreChange,
       options: genres,
     },
     {
-      name: "style",
-      value: style,
-      onChange: handleStyleChange,
-      options: styles,
+      name: "Vibe",
+      value: vibe,
+      onChange: handleVibeChange,
+      multiple: true,
+      options: vibes[genre],
     },
   ];
 
@@ -107,7 +92,9 @@ export default function Home() {
       <div className="flex flex-col gap-1" key={name}>
         <label htmlFor={name}>{name}</label>
         <select
-          className="border"
+          className={`border min-w-[200px] px-2 py-1 ${
+            multiple ? "min-h-[200px]" : ""
+          }`}
           multiple={multiple}
           id={name}
           value={value}
@@ -123,51 +110,40 @@ export default function Home() {
     )
   );
 
-  const outputMarkup = (
-    <div className="flex flex-col gap-1">
-      <label htmlFor="output">Output</label>
-      <textarea
-        className="border max-w-xl w-full"
-        id="output"
-        value={music ? JSON.stringify(music, null, 2) : ""}
-        readOnly
-        rows={10}
-      />
-    </div>
-  );
-
-  const params = `${vibe.join(" ")} ${genre} ${style}`;
-  const downloadButtonData = [
-    {
-      name: "Melody",
-      disabled: !Boolean(midi?.melody) || loading,
-      onClick: () => downloadUri(midi?.melody || "", `${params}.mid`),
-    },
-  ];
-  const downloadButtonMarkup = downloadButtonData.map(
-    ({ name, onClick, disabled }) => (
-      <button key={name} onClick={onClick} disabled={disabled}>
-        Download {name}
-      </button>
-    )
-  );
-
-  const generateButtonText = loading ? "Loading..." : "Generate Music";
+  const generateButtonText = loading ? "Loading..." : "Create music";
+  const successMessageMarkup = Boolean(midi?.melody) ? (
+    <>
+      <div className="text-lg">🔥 Success!</div>
+      <div className="flex gap-4">
+        <Button
+          onClick={() =>
+            downloadUri(midi?.melody || "", `${currentParams}.mid`)
+          }
+          disabled={!Boolean(midi?.melody) || loading}
+        >
+          Download
+        </Button>
+      </div>
+    </>
+  ) : null;
 
   return (
-    <main>
-      <section>
-        <h1>Melody GPT</h1>
-        <div className="flex gap-4">{paramMarkup}</div>
-        <div className="flex flex-col gap-2">
-          <div>
-            <button onClick={generateMusic}>{generateButtonText}</button>
+    <>
+      <Header />
+      <main>
+        <section>
+          <div className="flex gap-8">{paramMarkup}</div>
+          <div className="flex flex-col gap-2">
+            <div>
+              <Button type="secondary" onClick={generateMusic}>
+                {generateButtonText}
+              </Button>
+            </div>
+            <p className="text-rose-600">{error}</p>
           </div>
-          <p className="text-rose-600">{error}</p>
-        </div>
-        <div>{outputMarkup}</div>
-        <div className="flex gap-4">{downloadButtonMarkup}</div>
-      </section>
-    </main>
+          {successMessageMarkup}
+        </section>
+      </main>
+    </>
   );
 }

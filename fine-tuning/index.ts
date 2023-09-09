@@ -1,7 +1,7 @@
 import "./env";
 import path from "path";
 import { createReadStream, existsSync } from "fs";
-import { openai } from "../backend/openai";
+import { openai } from "../modules/openai";
 import { createTrainingData } from "./training-data";
 import * as readline from "readline";
 import { stdin as input, stdout as output } from "process";

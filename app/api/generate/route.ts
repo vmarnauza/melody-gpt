@@ -76,9 +76,9 @@ export async function POST(request: NextRequest) {
 const isRequestBodyValid = (
   body: GenerateRequestBody
 ): body is GenerateRequestBody => {
-  const { genre, vibe, style } = body;
+  const { genre, vibe } = body;
 
-  if (!genre || !vibe || !style) return false;
+  if (!genre || !vibe) return false;
 
   return true;
 };

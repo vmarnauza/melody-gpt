@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "tune": "npx ts-node ./fine-tuning",
-    "deploy": "gcloud app deploy"
+    "deploy": "gcloud config set project melody-gpt && gcloud app deploy"
   },
   "dependencies": {
     "@tonejs/midi": "^2.0.28",
