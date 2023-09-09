@@ -4,9 +4,13 @@ A ChatGPT music composer with export to MIDI. Currently uses a fine-tuned versio
 
 [https://melody-gpt.uc.r.appspot.com](https://melody-gpt.uc.r.appspot.com)
 
+## Requirements
+
+This is a [Next.js](https://nextjs.org/) project and requires [Node.js](https://nodejs.org/) and [NPM](https://www.npmjs.com/).
+
 ## Getting Started
 
-Set up an `.env.local` file with your OpenAI API key and organization ID. See `.env.sample` for reference.
+Set up an `.env.local` file in project root with your OpenAI API key and organization ID. See `.env.sample` for reference.
 
 Install NPM packages:
 
@@ -32,6 +36,6 @@ Run fine-tuning with NPM:
 npm run tune
 ```
 
-Fine-tuning first takes all your training MIDI files and creates a `training-data.jsonl` file, which is the file to be uploaded to OpenAI for fine-tuning. Before the upload happens you will be asked to confirm that you want to proceed with fine-tuning.
+Fine-tuning first takes all your training MIDI files and creates `training-data.jsonl`, which is the file to be uploaded to OpenAI for fine-tuning. Before the upload happens you will be asked to confirm that you want to proceed with fine-tuning.
 
-Once fine-tuning completes add your fine-tuned model ID to `.env.local` as the value for the `OPENAI_MODEL_ID` variable.
+Once fine-tuning completes add your fine-tuned model's ID to `.env.local` as the value for the `OPENAI_MODEL_ID` variable.
