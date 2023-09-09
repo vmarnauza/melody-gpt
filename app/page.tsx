@@ -37,7 +37,7 @@ export default function Home() {
     setMidi(null);
 
     try {
-      const res = await fetch("/api/music/generate", {
+      const res = await fetch("/api/generate", {
         method: "POST",
         body: JSON.stringify({
           vibe: vibe.join(", "),
